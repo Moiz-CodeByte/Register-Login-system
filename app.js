@@ -1,14 +1,14 @@
 //jshint esversion:6
 require('dotenv').config()
 const bodyParser = require("body-parser");
-var encrypt = require('mongoose-encryption');
 const mongoose = require("mongoose");
 const express = require("express");
+const bcrypt = require('bcrypt');
 const ejs = require("ejs");
-var md5 = require('md5');
+
 
 const app = express();
-
+const saltRounds = 10;
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -37,13 +37,15 @@ app.get("/login", function (req, res) {
 app.get("/register", function (req, res) {
     res.render("register")
 });
-
-
 app.post("/register" , function (req, res) {
+bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+    // Store hash in your password DB.
     const newUser = new user({
         email    : req.body.username,
-        password : md5(req.body.password)
+        password : hash
     })
+   
+
     newUser.save()
     .then(function() {
         res.render("secrets");
@@ -51,22 +53,28 @@ app.post("/register" , function (req, res) {
       .catch(function (err) {
         console.error(err);
       });
+    });
 })
 
 app.post("/login", function(req, res){
     const username = req.body.username;
-    const password = md5(req.body.password);
+    const password = req.body.password;
+  
     user.findOne({email : username})
     .then(function(userFound) {
         if(userFound){
-            if(userFound.password == password){
-                res.render('secrets')
-            }
-        }
-        else{
-            res.send('wrong credentials');
-        }
-    })
+            bcrypt.compare(password, userFound.password, function(err, result) {
+                if(result === true){
+                    
+                        res.render('secrets')
+
+                    }
+                    else{
+                        res.send('wrong credentials');
+                    }
+                    })
+                }
+                })
     .catch(function(err){
         res.send(err);
     })

@@ -34,6 +34,7 @@ const secretSchema = new mongoose.Schema({
     email : {type : String },
     password :{ type : String },
     googleId: String,
+    secret : String
   });
 
 secretSchema.plugin(passportLocalMongoose);
@@ -46,6 +47,7 @@ passport.serializeUser(function(user, cb) {
       cb(null, { id: user.id, username: user.username });
     });
   });
+
   
   passport.deserializeUser(function(user, cb) {
     process.nextTick(function() {
@@ -60,7 +62,7 @@ passport.use(new GoogleStrategy({
     passReqToCallback   : true
   },
   function(request, accessToken, refreshToken, profile, done) {
-    console.log(profile);
+    // console.log(profile);
     user.findOrCreate({ googleId: profile.id }, function (err, user) {
       return done(err, user);
     });
@@ -96,9 +98,24 @@ app.get("/logout", function (req, res){
 app.get("/register", function (req, res) {
     res.render("register")
 });
-app.get("/secrets", function(req, res){
+app.get("/secrets", async function (req, res) {
     if (req.isAuthenticated()) {
-        res.render("secrets");
+        try {
+            const foundUser = await user.find({ "secret": { $ne: null } }).exec();
+            if (foundUser) {
+                res.render("secrets", { userWithSecrets: foundUser });
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    } else {
+        res.redirect("/login");
+    }
+});
+
+app.get("/submit", function(req, res){
+    if (req.isAuthenticated()) {
+        res.render("submit");
     } else {
         res.redirect("/login");
     }
@@ -136,7 +153,25 @@ app.post("/login", function(req, res){
         }
     })
   });
-
+app.post("/submit", function(req, res){
+    const submittedSecret = req.body.secret;
+   
+    user.findById(req.user.id)
+    .then(function (foundUser) {
+        if(foundUser){
+            foundUser.secret = submittedSecret;
+            foundUser.save()
+            .then(function(){
+                res.redirect("secrets")
+            })
+        }
+    })
+    .catch(function(err){
+        if(err){
+            console.log(err);
+        }
+    })
+})
 
 
 

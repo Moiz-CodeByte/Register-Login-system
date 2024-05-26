@@ -28,7 +28,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-mongoose.connect("mongodb://127.00.1:27017/secretDB");
+mongoose.connect("mongodb://127.0.0.1:27017/secretDB");
 
 const secretSchema = new mongoose.Schema({
     email : {type : String },
@@ -36,6 +36,7 @@ const secretSchema = new mongoose.Schema({
     googleId: String,
     secret : String
   });
+
 
 secretSchema.plugin(passportLocalMongoose);
 secretSchema.plugin(findOrCreate);

@@ -123,6 +123,7 @@ This is the main entry point of the application. It sets up the Express server, 
 
 This project is licensed under the MIT License.
 ## Author
-Developed by Abdul Moiz. For more information, visit abdulmoiz.net.
-```
+Developed by Abdul Moiz. For more information, visit [abdulmoiz](https://abdulmoiz.net).
+
+
 

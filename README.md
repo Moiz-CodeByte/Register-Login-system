@@ -1,6 +1,6 @@
-# Secrets Web Application
 
-## Login and register using email and google account
+```markdown
+# Secrets Web Application
 
 This is a Node.js web application that allows users to register, log in, and anonymously share secrets. The app uses Passport.js for authentication, including Google OAuth2, and MongoDB for data storage.
 
@@ -34,36 +34,40 @@ This is a Node.js web application that allows users to register, log in, and ano
    ```bash
    git clone https://github.com/yourusername/secrets-app.git
    cd secrets-app
+   ```
 
 2. **Install dependencies:**
    ```bash
    npm install
+   ```
 
-Set up environment variables:
-Create a .env file in the root directory and add the following variables:
+3. **Set up environment variables:**
+   Create a `.env` file in the root directory and add the following variables:
+   ```env
+   CLIENT_ID=your-google-client-id
+   CLIENT_SECRET=your-google-client-secret
+   ```
 
-env
-Copy code
-CLIENT_ID=your-google-client-id
-CLIENT_SECRET=your-google-client-secret
-Run the application:
+4. **Run the application:**
+   ```bash
+   node app.js
+   ```
 
-bash
-Copy code
-node app.js
-Access the application:
-Open your browser and navigate to http://localhost:3000.
+5. **Access the application:**
+   Open your browser and navigate to `http://localhost:3000`.
 
-Usage
-Home Page: Access the home page at /.
-Register: Register a new account at /register.
-Login: Log in to your account at /login.
-Secrets: View shared secrets at /secrets (requires authentication).
-Submit Secret: Submit a new secret at /submit (requires authentication).
-Logout: Log out of your account at /logout.
-Project Structure
-arduino
-Copy code
+## Usage
+
+- **Home Page:** Access the home page at `/`.
+- **Register:** Register a new account at `/register`.
+- **Login:** Log in to your account at `/login`.
+- **Secrets:** View shared secrets at `/secrets` (requires authentication).
+- **Submit Secret:** Submit a new secret at `/submit` (requires authentication).
+- **Logout:** Log out of your account at `/logout`.
+
+## Project Structure
+
+```
 secrets-app/
 │
 ├── public/
@@ -81,28 +85,42 @@ secrets-app/
 ├── app.js
 ├── package.json
 └── README.md
-Code Overview
-app.js
+```
+
+## Code Overview
+
+### app.js
+
 This is the main entry point of the application. It sets up the Express server, configures middleware, connects to MongoDB, and defines routes for authentication and rendering views.
 
-Middleware
-express.static: Serves static files from the public directory.
-body-parser: Parses incoming request bodies.
-express-session: Manages user sessions.
-passport: Initializes Passport.js for authentication.
-MongoDB Models
-User Model: Defines the user schema with plugins for Passport.js and find-or-create functionality.
-Routes
-GET /: Renders the home page.
-GET /auth/google: Initiates Google OAuth2 authentication.
-GET /auth/google/secrets: Handles the Google OAuth2 callback.
-GET /login: Renders the login page.
-POST /login: Handles login form submission.
-GET /logout: Logs out the user.
-GET /register: Renders the registration page.
-POST /register: Handles registration form submission.
-GET /secrets: Renders the secrets page (requires authentication).
-GET /submit: Renders the submit secret page (requires authentication).
-POST /submit: Handles secret submission.
-License
+### Middleware
+
+- **express.static:** Serves static files from the `public` directory.
+- **body-parser:** Parses incoming request bodies.
+- **express-session:** Manages user sessions.
+- **passport:** Initializes Passport.js for authentication.
+
+### MongoDB Models
+
+- **User Model:** Defines the user schema with plugins for Passport.js and find-or-create functionality.
+
+### Routes
+
+- **GET /:** Renders the home page.
+- **GET /auth/google:** Initiates Google OAuth2 authentication.
+- **GET /auth/google/secrets:** Handles the Google OAuth2 callback.
+- **GET /login:** Renders the login page.
+- **POST /login:** Handles login form submission.
+- **GET /logout:** Logs out the user.
+- **GET /register:** Renders the registration page.
+- **POST /register:** Handles registration form submission.
+- **GET /secrets:** Renders the secrets page (requires authentication).
+- **GET /submit:** Renders the submit secret page (requires authentication).
+- **POST /submit:** Handles secret submission.
+
+## License
+
 This project is licensed under the MIT License.
+```
+
+Feel free to adjust any details as necessary!

@@ -1,6 +1,7 @@
 
-```markdown
 # Secrets Web Application
+
+## Login and register using email and google account
 
 This is a Node.js web application that allows users to register, log in, and anonymously share secrets. The app uses Passport.js for authentication, including Google OAuth2, and MongoDB for data storage.
 
@@ -32,8 +33,8 @@ This is a Node.js web application that allows users to register, log in, and ano
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/secrets-app.git
-   cd secrets-app
+    https://github.com/Moiz-CodeByte/Register-Login-system-using-google.git
+   cd Register-Login-system-using-google
    ```
 
 2. **Install dependencies:**
@@ -123,4 +124,3 @@ This is the main entry point of the application. It sets up the Express server, 
 This project is licensed under the MIT License.
 ```
 
-Feel free to adjust any details as necessary!
